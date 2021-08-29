@@ -4,9 +4,7 @@ import "../components/MintPopover.css";
 import Title from "antd/lib/typography/Title";
 import Text from 'antd/lib/typography/Text';
 
-
 const Rarity = (): React.ReactElement => {
-
   return (
     <>
       <Row>

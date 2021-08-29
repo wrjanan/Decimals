@@ -51,6 +51,7 @@ export const Web3ContextProvider = ({ children }: PropsWithChildren<unknown>):Re
       console.log("error", e);
       return({...state, status: ApiRequestStatus.isFailed})
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
 
   const fetchWeb3 = useCallback(async () => {
@@ -74,10 +75,12 @@ export const Web3ContextProvider = ({ children }: PropsWithChildren<unknown>):Re
       fetchingNow.current = false;
       dispatch({ type: SET_FAILED });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
 
   useEffect(() => {
     fetchWeb3();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

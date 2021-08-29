@@ -4,7 +4,13 @@ import { ApiRequestStatus } from "../constants/api-request-status";
 import CyberPunkRangersTokenContract from "../contracts/CyberPunkRangersToken.json";
 import CyberPunkRangersContract from "../contracts/CyberPunkRangers.json";
 import getWeb3 from "../utils/getWeb3";
-import { ContractActions, ContractState, CyberPunkContracts, reducer, SET_CONTEXT, SET_CONTRACTS, SET_FAILED, SET_LOADING } from "./contract-reducer";
+import { ContractActions,
+  ContractState,
+  CyberPunkContracts,
+  reducer,
+  SET_CONTEXT,
+  SET_FAILED,
+  SET_LOADING } from "./contract-reducer";
 export interface ContractContextState extends ContractState {
   getContract: () => Promise<CyberPunkContracts>
   fetchContract: () => void
@@ -19,9 +25,7 @@ const initialState: ContractContextState = {
   web3: null,
   account: null,
   getContract: (): Promise<CyberPunkContracts> => {
-    return new Promise<CyberPunkContracts>((resolve) => {
-      resolve({});
-    });
+    return Promise.resolve({});
   },
   fetchContract: (): void => {},
   dispatch: (): void => {}
@@ -77,6 +81,7 @@ export const ContractContextProvider = ({ children }: PropsWithChildren<unknown>
       console.log("error", e);
       return({...state, status: ApiRequestStatus.isFailed})
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
 
   const fetchContract = useCallback(async () => {
@@ -106,10 +111,12 @@ export const ContractContextProvider = ({ children }: PropsWithChildren<unknown>
       fetchingNow.current = false;
       dispatch({ type: SET_FAILED });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
 
   const getContract = useCallback(async () => {
     return state.contracts;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
   return (
     <ContractContext.Provider value={{ ...state, getContract, fetchContract, dispatch }}>

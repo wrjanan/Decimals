@@ -1,7 +1,6 @@
 import React, { PropsWithChildren, useCallback, useContext, useEffect } from "react";
 import { Contract } from "web3-eth-contract";
 import { ApiRequestStatus } from "../constants/api-request-status";
-import { useContractContext } from "./contract-context";
 import { PunkState, reducer, SET_FAILED, SET_LOADING, SET_PUNK_CONTEXT } from "./punk-contract-reducer";
 import CyberPunkRangersContract from "../contracts/CyberPunkRangers.json";
 import { useWeb3Context } from "./web3-context";
@@ -51,6 +50,7 @@ export const PunkContextProvider = ({ children }: PropsWithChildren<unknown>):Re
     return () => {
       fetchingNow.current = false
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [web3])
 
   const fetchPunks = useCallback(async () => {
@@ -91,6 +91,7 @@ export const PunkContextProvider = ({ children }: PropsWithChildren<unknown>):Re
     });
     console.log("results", results);
     return results;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
 
   const getPunks = useCallback(async () => {
@@ -111,6 +112,7 @@ export const PunkContextProvider = ({ children }: PropsWithChildren<unknown>):Re
       fetchingNow.current = false;
       dispatch({ type: SET_FAILED });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <PunkContext.Provider value={{ ...state, getPunks}}>

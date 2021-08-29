@@ -8,15 +8,14 @@ import { ContractContextProvider, useContractContext } from './context/contract-
 import { Layout } from 'antd';
 import { Content, Footer } from 'antd/lib/layout/layout';
 import { PunkContextProvider, usePunkContext } from './context/punk-contract-context';
-import getWeb3 from './utils/getWeb3';
-import { SET_CONTRACTS } from './context/contract-reducer';
-import Web3Context, { useWeb3Context, Web3ContextProvider } from './context/web3-context';
+import { useWeb3Context, Web3ContextProvider } from './context/web3-context';
 import { ApiRequestStatus } from './constants/api-request-status';
-
+import CyberPunkRangersTokenContract from "./contracts/CyberPunkRangersToken.json";
+import CyberPunkRangersContract from "./contracts/CyberPunkRangers.json";
 
 const App: React.VFC = () => {
   const { status, fetchWeb3 } = useWeb3Context();
-  const { contracts, fetchContract } = useContractContext();
+  const { fetchContract } = useContractContext();
   const { getPunks } = usePunkContext();
 
   const customHistory = createBrowserHistory();
@@ -30,6 +29,7 @@ const App: React.VFC = () => {
       }
     }
     initWeb3();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
 
@@ -44,7 +44,15 @@ const App: React.VFC = () => {
                 <RouteContainer></RouteContainer>
               </Content>
             </Layout>
-            <Footer style={{ textAlign: 'center' }}>Cyber Punk Rangers© 2021 - {new Date().getFullYear()} created by HippieTechie</Footer>
+            <Footer style={{ textAlign: 'center' }}>
+              Cyber Punk Rangers Contract: <a href={`https://etherscan.io/address/${CyberPunkRangersContract.networks[5777].address}`}>{CyberPunkRangersContract.networks[5777].address}</a>
+              <br></br>
+              ERC20 Token Contract: <a href={`https://etherscan.io/address/${CyberPunkRangersTokenContract.networks[5777].address}`}>{CyberPunkRangersTokenContract.networks[5777].address}</a>
+              <br></br>
+              <br></br>
+              <br></br>
+              Cyber Punk Rangers© 2021 - {new Date().getFullYear()} created by a CyberPunkRanger
+              </Footer>
           </Router>
         </PunkContextProvider>
       </ContractContextProvider>

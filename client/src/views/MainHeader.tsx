@@ -36,8 +36,8 @@ function MainHeader() {
         <BrowserView>
           <Menu mode="horizontal" theme="dark" defaultSelectedKeys={["/"]}>
             <Menu.Item key="/" title="Home" onClick={() => goTo("/")}>Home</Menu.Item>
-            <Menu.Item key="/contracts" onClick={() => goTo("/contracts")}>Contracts</Menu.Item>
-            <Menu.Item key="/gallery" onClick={() => goTo("/gallery")}>Gallery</Menu.Item>
+            {/* <Menu.Item key="/contracts" onClick={() => goTo("/contracts")}>Contracts</Menu.Item>
+            <Menu.Item key="/gallery" onClick={() => goTo("/gallery")}>Gallery</Menu.Item> */}
           </Menu>
         </BrowserView>
       </Header>

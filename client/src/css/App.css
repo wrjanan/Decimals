@@ -1,3 +1,8 @@
+body {
+  font-size: 1.4em;
+  font-family: Inter, sans-serif;
+  /* font-family: "OpenDyslexic"; */
+}
 .App {
   text-align: center;
 }
@@ -10,6 +15,10 @@
   justify-content: center;
   text-align: -moz-center;
   text-align: -webkit-center;
+}
+
+.ranger-image {
+  width: -webkit-fill-available;
 }
 
 @media (prefers-reduced-motion: no-preference) {

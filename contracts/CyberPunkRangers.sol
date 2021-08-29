@@ -1912,7 +1912,7 @@ contract CyberPunkRangers is ICyberPunkRangers, ERC721, Ownable {
         address owner = ownerOf(tokenId);
 
         require(_msgSender() == owner, "ERC721: caller is not the owner");
-        require(validateDescription(newDescription, 369) == true, "Not a valid description");
+        require(validateDescription(newDescription, 365) == true, "Not a valid description");
         require(sha256(bytes(newDescription)) != sha256(bytes(_tokenDescription[tokenId])), "New name is same as the current one");
         uint descriptionPriceChange = DESCRIPTION_PER_CHAR_PRICE * getDescriptionCount(newDescription);
         IERC20(_nctAddress).transferFrom(msg.sender, address(this), descriptionPriceChange);
@@ -1994,5 +1994,15 @@ contract CyberPunkRangers is ICyberPunkRangers, ERC721, Ownable {
             }
         }
         return string(bLower);
+    }
+
+    function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
+        require(_exists(tokenId), "ERC721Metadata: URI query for nonexistent token");
+
+        string memory base = baseURI();
+        uint256 index = SafeMath.add(tokenId, startingIndex);
+        uint256 compensatedTokenID = SafeMath.mod(index, MAX_NFT_SUPPLY);
+
+        return string(abi.encodePacked(base, Strings.toString(compensatedTokenID)));
     }
 }

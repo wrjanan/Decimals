@@ -1,16 +1,11 @@
-import { Row, Col, Card, Button, Divider } from "antd";
+import { Row, Col, Button, Divider } from "antd";
 import "../components/MintPopover.css";
 import Title from "antd/lib/typography/Title";
 import { useState, useEffect } from "react";
 import { useContractContext } from "../../context/contract-context";
 import RangerCard, { RangerCardProps } from "./RangerCard";
-import { sum } from "lodash";
 import ETH from "../../utils/math-utils";
-
-const { Meta } = Card;
-
-const cardStyle = {
-}
+import ContractService from "../../service/ContractService";
 
 const MyRangerGallery = (): React.ReactElement => {
   const { account, contracts, fetchContract } = useContractContext();
@@ -41,17 +36,21 @@ const MyRangerGallery = (): React.ReactElement => {
     return tokens;
   }
 
-  const claimTokens = async (tokenIndexes: number[]) => {
-    const tokens = await contractTokens?.methods.claim(tokenIndexes).send({from:account});
-    console.log("claimed tokens response", tokens)
-    getTotalTokens();
-    return tokens;
+  const claimTokens = async (tokenIndexes: number[]): Promise<void> => {
+    if(contractTokens && account) {
+      await ContractService.claimTokens(contractTokens, account, tokenIndexes);
+      getTotalTokens();
+    }
+    return;
   }
 
   const getTotalTokens = async () => {
-    const tokens = await contractTokens?.methods.balanceOf(account).call();
-    setTotalTokens(tokens);
-    return tokens;
+    if(contractTokens && account) {
+      const tokens = await ContractService.getTotalTokens(contractTokens, account);
+
+      setTotalTokens(tokens);
+      return tokens;
+    }
   }
 
   useEffect(() => {
@@ -75,9 +74,9 @@ const MyRangerGallery = (): React.ReactElement => {
         punkAddresses.forEach((punkId) => {
           tokenPromises.push(rangerCardProps(punkId));
         });
-        return Promise.all(tokenPromises).then((result) => {
-          console.log(result);
-          return result;
+        return Promise.all(tokenPromises).then((result2) => {
+          console.log(result2);
+          return result2;
         });
       })
       console.log("myRangeraProps", myRangerProps);
@@ -86,13 +85,14 @@ const MyRangerGallery = (): React.ReactElement => {
     }
     getTotalTokens();
     getMaxRangers();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contract]);
 
   useEffect(() => {
     const sumClaimableTokens = async ()=> {
       let temp = 0;
-      await myRangersProps.forEach((props) => {
-        temp += Math.floor(props.rangerClaimableTokens / 10 ** 16) / 100
+      myRangersProps.forEach((props) => {
+        temp += Math.floor(props.ranger.rangerClaimableTokens / 10 ** 16) / 100
       });
       setClaimableTokens(temp);
     }
@@ -100,16 +100,22 @@ const MyRangerGallery = (): React.ReactElement => {
   }, [myRangersProps])
 
   const rangerCardProps = async (index: number): Promise<RangerCardProps> => {
-    const rangerURI = await getPunkURI(index);
+    let rangerURI = "";
+    // eslint-disable-next-line eqeqeq
+    if(await ContractService.getStartingIndex(contract) != 0) {
+      rangerURI = await getPunkURI(index);
+    }
     const rangerName = await getPunkName(index);
     const rangerTokens = await getAccumulatedTokens(index);
     const rangerDescription = await getPunkDescription(index);
-    return {
-      rangerName,
-      rangerURI,
-      rangerToken: index,
-      rangerDescription: rangerDescription,
-      rangerClaimableTokens: rangerTokens
+    return { ranger: {
+        rangerName,
+        rangerURI,
+        rangerToken: index,
+        rangerDescription: rangerDescription,
+        rangerClaimableTokens: rangerTokens,
+        claimTokens: () => claimTokens([index])
+      }
     }
   }
   const printMyRangers = () => {
@@ -117,15 +123,8 @@ const MyRangerGallery = (): React.ReactElement => {
 
     return myRangersProps.map((props) => {
       return (
-        <Col span={4} key={props.rangerToken} style={{marginBottom:"24px"}}>
-          <RangerCard
-            rangerName={props.rangerName}
-            rangerURI={props.rangerURI}
-            rangerToken={props.rangerToken}
-            rangerDescription={props.rangerDescription}
-            rangerClaimableTokens={props.rangerClaimableTokens}
-            claimTokens={() => claimTokens([props.rangerToken])}
-            />
+        <Col xs={24} md={12} lg={6} key={props.ranger.rangerToken} style={{marginBottom:"24px"}}>
+          <RangerCard ranger={props.ranger}/>
         </Col>
         )
       });

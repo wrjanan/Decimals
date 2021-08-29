@@ -12,6 +12,7 @@ import logo from '../../logo.svg';
 import { DownloadOutlined } from '@ant-design/icons';
 import { useState, useEffect } from "react";
 import { useContractContext } from "../../context/contract-context";
+import ContractService from "../../service/ContractService";
 
 const backgroundStyle = {
   width:"15vh", height:"15vh",
@@ -33,14 +34,11 @@ const Intro = (): React.ReactElement => {
       if(!contract) {
         await fetchContract();
       }
-      const maxRangers = await contract?.methods.MAX_NFT_SUPPLY().call();
-      setMaxRangers(maxRangers);
-      console.log(maxRangers)
-
-      const mintedRangers = await contract?.methods.totalSupply().call()
-      setMintedRangers(mintedRangers);
+      setMaxRangers(await contract?.methods.MAX_NFT_SUPPLY().call());
+      setMintedRangers(await contract?.methods.totalSupply().call());
     }
     getMaxRangers();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contract]);
 
   const setAddress = async () => {
@@ -52,6 +50,10 @@ const Intro = (): React.ReactElement => {
         });
       });
     }
+  }
+
+  const setBaseUrl = async () => {
+    await ContractService.setBaseURL(contract, account, "http://api.steambadgefinder.com/");
   }
 
   return (
@@ -79,6 +81,7 @@ const Intro = (): React.ReactElement => {
           <p>NFT Token Contract: {contracts?.CyberPunkRangersTokenContract?.options.address}</p>
           <br />
           <Button onClick={setAddress}>Set address</Button>
+          <Button onClick={setBaseUrl}>Set BaseURLsetBaseUrl</Button>
         </Col>
 
       </Row>
