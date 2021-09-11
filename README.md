@@ -1,3 +1,25 @@
+## Welcome to the decimals Project
+
+This is the website that supports the decimals project.
+
+Feel free to learn from it if there is anything to learn from.
+
+More importantly, if there is anything that can be improved on, let me know :)
+
+I will appreciate that greatly.
+
+In time, we will be adding a functionality where users will be able to add derivatives project.
+
+Meaning that this website will be functioning with data input from users all around the world.
+
+Let us embrace the open source together :) 
+
+While we stand on the shoulders of giants, may we be friends with ourselves and giants and ants alike :)
+
+Cheers my friends!
+
+
+
 
 ## Available Scripts
 
