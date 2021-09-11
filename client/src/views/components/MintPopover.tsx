@@ -2,6 +2,7 @@ import React, { ReactNode, useState } from "react";
 import { Button, Popover, Form, InputNumber } from 'antd';
 import "./MintPopover.css";
 import { useContractContext } from "../../context/contract-context";
+import ContractService from "../../service/ContractService";
 
 type MintPopoverProps = {
   children: ReactNode;
@@ -11,7 +12,7 @@ const MintPopover: React.FC<MintPopoverProps> = ({
   children,
 }): React.ReactElement=> {
   const { account, contracts } = useContractContext();
-  const { CyberPunkRangersContract } = contracts;
+  const { DecimalsContract } = contracts;
   const [clicked, setClicked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -29,10 +30,10 @@ const MintPopover: React.FC<MintPopoverProps> = ({
         validateStatus: 'error',
         errorMsg: 'Mint count has to be greater than 0',
       };
-    } else if (number > 20) {
+    } else if (number > 3) {
       return {
         validateStatus: 'error',
-        errorMsg: 'Mint count has to be less than 20',
+        errorMsg: 'Mint count has to be less than 3',
       };
     }
     return {
@@ -61,13 +62,7 @@ const MintPopover: React.FC<MintPopoverProps> = ({
       const nftCount = number.value
 
       setIsLoading(true);
-      await CyberPunkRangersContract?.methods.getNFTPrice().call().then((nftPrice: any) => {
-        return CyberPunkRangersContract?.methods.mintNFT(nftCount).estimateGas({ value: nftCount * nftPrice }).then((gas: any) => {
-          return CyberPunkRangersContract?.methods.mintNFT(nftCount).send({ from: account, value: nftCount * nftPrice }).then((response: any) => {
-            console.log("successful transaction", response);
-          });
-        });
-      });
+      await ContractService.mintDecimals(DecimalsContract, nftCount, account);
       setIsLoading(false);
     };
     const ref = React.createRef<any>();
@@ -78,17 +73,17 @@ const MintPopover: React.FC<MintPopoverProps> = ({
         validateStatus={number.validateStatus}
         help={number.errorMsg}
         >
-        <InputNumber style={{textAlign:"center"}} min={1} max={20} value={number.value} onChange={onNumberChange} />
+        <InputNumber style={{textAlign:"center"}} min={1} max={3} value={number.value} onChange={onNumberChange} />
       </Form.Item>
       <Form.Item style={{textAlign: "end"}}>
         <Button type="primary" htmlType="submit" disabled={isLoading} loading={isLoading}>
-          Mint {number.value} Rangers Now
+          Mint {number.value} Decimals Now
         </Button>
       </Form.Item>
     </Form>);
   };
 
-  const title = 'We can only mint maximum 20 per session.';
+  const title = 'We can only mint maximum 3 per session.';
   const hoverTitle = <b>{title}</b>;
   const hoverContent = <div>{RawForm()}</div>;
 

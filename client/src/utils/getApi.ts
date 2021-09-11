@@ -1,7 +1,3 @@
-type CyberPunkRangersApiType ={
-
-}
-
 const parseURLParams = (url:string) => {
   let queryStart = url.indexOf("?") + 1,
       queryEnd   = url.indexOf("#") + 1 || url.length + 1,

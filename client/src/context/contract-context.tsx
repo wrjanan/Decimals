@@ -1,18 +1,17 @@
 import React, { PropsWithChildren, useCallback, useContext } from "react";
 import Web3 from 'web3';
 import { ApiRequestStatus } from "../constants/api-request-status";
-import CyberPunkRangersTokenContract from "../contracts/CyberPunkRangersToken.json";
-import CyberPunkRangersContract from "../contracts/CyberPunkRangers.json";
+import DecimalsContract from "../contracts/Decimals.json";
 import getWeb3 from "../utils/getWeb3";
 import { ContractActions,
   ContractState,
-  CyberPunkContracts,
+  DecimalsContracts,
   reducer,
   SET_CONTEXT,
   SET_FAILED,
   SET_LOADING } from "./contract-reducer";
 export interface ContractContextState extends ContractState {
-  getContract: () => Promise<CyberPunkContracts>
+  getContract: () => Promise<DecimalsContracts>
   fetchContract: () => void
   dispatch: (action: ContractActions) => void
 };
@@ -24,7 +23,7 @@ const initialState: ContractContextState = {
   web3Provider: null,
   web3: null,
   account: null,
-  getContract: (): Promise<CyberPunkContracts> => {
+  getContract: (): Promise<DecimalsContracts> => {
     return Promise.resolve({});
   },
   fetchContract: (): void => {},
@@ -54,18 +53,12 @@ export const ContractContextProvider = ({ children }: PropsWithChildren<unknown>
       const account = accounts[0];
       console.log(accounts[0]);
 
-      const deployedNetwork = CyberPunkRangersTokenContract.networks[5777];
-      const abi: any = CyberPunkRangersTokenContract.abi;
-      const deployedNetwork2 = CyberPunkRangersContract.networks[5777];
-      const abi2: any = CyberPunkRangersContract.abi;
-      const contracts:CyberPunkContracts = {
-        CyberPunkRangersTokenContract: new web3.eth.Contract(
-          abi,
-          deployedNetwork && deployedNetwork.address
-          ),
-        CyberPunkRangersContract: new web3.eth.Contract(
-            abi2,
-            deployedNetwork2 && deployedNetwork2.address
+      const deployedNetwork = DecimalsContract.networks[1631351044667];
+      const abi: any = DecimalsContract.abi;
+      const contracts:DecimalsContracts = {
+        DecimalsContract: new web3.eth.Contract(
+            abi,
+            deployedNetwork && deployedNetwork.address
           )
       }
 
@@ -85,9 +78,8 @@ export const ContractContextProvider = ({ children }: PropsWithChildren<unknown>
   },[]);
 
   const fetchContract = useCallback(async () => {
-    console.log("const CyberPunkRangersContract", state.contracts.CyberPunkRangersContract)
-    console.log("const CyberPunkRangersTokenContract", state.contracts.CyberPunkRangersTokenContract)
-    if(state.contracts.CyberPunkRangersContract && state.contracts.CyberPunkRangersTokenContract) {
+    console.log("const DecimalsContract", state.contracts.DecimalsContract)
+    if(state.contracts.DecimalsContract) {
       return;
     }
 

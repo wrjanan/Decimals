@@ -25,7 +25,7 @@ function MainHeader() {
               // popupClassName="MobilePopupMenu"
               key="sub1"
               icon={<HomeOutlined/>}
-              title="Cyber Punk Rangers"
+              title="Decimals"
               style={{justifyContent:"center"}}>
               <Menu.Item key="/" title="Home" onClick={() => goTo("/")}>Home</Menu.Item>
               <Menu.Item key="/contracts" onClick={() => goTo("/contracts")}>Contracts</Menu.Item>

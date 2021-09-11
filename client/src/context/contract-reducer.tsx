@@ -9,11 +9,10 @@ export interface ContractState {
   web3Provider: provider | null;
   web3: Web3 | null;
   account: string | null;
-  contracts: CyberPunkContracts;
+  contracts: DecimalsContracts;
 }
-export type CyberPunkContracts = {
-  CyberPunkRangersContract?: Contract,
-  CyberPunkRangersTokenContract?: Contract,
+export type DecimalsContracts = {
+  DecimalsContract?: Contract,
 }
 
 export interface ContractContextState {
@@ -22,7 +21,7 @@ export interface ContractContextState {
   web3Provider: provider | null;
   web3: Web3 | null;
   account: string | null;
-  contracts: CyberPunkContracts;
+  contracts: DecimalsContracts;
 }
 
 export const initialState: ContractState = {
