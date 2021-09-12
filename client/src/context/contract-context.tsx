@@ -1,7 +1,6 @@
 import React, { PropsWithChildren, useCallback, useContext } from "react";
 import Web3 from 'web3';
 import { ApiRequestStatus } from "../constants/api-request-status";
-import DecimalsContract from "../contracts/Decimals.json";
 import getWeb3 from "../utils/getWeb3";
 import { ContractActions,
   ContractState,
@@ -10,6 +9,9 @@ import { ContractActions,
   SET_CONTEXT,
   SET_FAILED,
   SET_LOADING } from "./contract-reducer";
+
+import ContractABI from "../abi/decimals";
+
 export interface ContractContextState extends ContractState {
   getContract: () => Promise<DecimalsContracts>
   fetchContract: () => void
@@ -43,22 +45,22 @@ export const ContractContextProvider = ({ children }: PropsWithChildren<unknown>
 
   const fetchContractFunction = useCallback(async () => {
     try{
-      console.log("fetchContractFunction");
       const web3 = await getWeb3();
       dispatch({ type: SET_CONTEXT, payload: { web3 } });
-      console.log("fetchContractFunction1");
       const web3Provider = web3.currentProvider;
       const accounts = await web3.eth.getAccounts();
-      console.log("fetchContractFunction2");
       const account = accounts[0];
-      console.log(accounts[0]);
 
-      const deployedNetwork = DecimalsContract.networks[1631351044667];
-      const abi: any = DecimalsContract.abi;
-      const contracts:DecimalsContracts = {
+      web3.eth.defaultAccount = account;
+      const network = await web3.eth.net.getId();
+      if(network !== 1) {
+        window.alert("Kindly Change to Ethereum Network for website to work as intended");
+      }
+      const abi: any = ContractABI;
+      const contracts: DecimalsContracts = {
         DecimalsContract: new web3.eth.Contract(
             abi,
-            deployedNetwork && deployedNetwork.address
+            "0xe106b70852e4Fd6Ea667823b9d79F499C5664CdF"
           )
       }
 

@@ -1,7 +1,55 @@
+.ant-divider .ant-divider-horizontal {
+  background-color: transparent;
+}
 body {
   font-size: 1.4em;
   font-family: Inter, sans-serif;
   /* font-family: "OpenDyslexic"; */
+}body, .ant-layout, .ant-layout-footer {
+  background-color: #11ee11ed;
+  border-radius: 1%;
+}
+.hoverable, .ant-btn-primary, .hoverable:focus {
+  cursor: pointer;
+  color: black;
+  background-color: black;
+  border-color: black;
+  outline: black;
+  fill: black;
+}
+.hoverable:hover {
+  color: rgb(87, 87, 87);
+  background-color: rgb(87, 87, 87);
+  border-color: rgb(87, 87, 87);
+  outline: rgb(87, 87, 87);
+  fill: rgb(87, 87, 87);
+}
+.hoverable:active {
+  color: rgb(133, 133, 133);
+  background-color: rgb(133, 133, 133);
+  border-color: rgb(133, 133, 133);
+  outline: rgb(133, 133, 133);
+  fill: rgb(133, 133, 133);
+}
+button.hoverable, 
+.ant-btn-primary, 
+button.hoverable:focus,
+button.hoverable:hover,
+button.hoverable:active {
+  color: white;
+}
+svg.hoverable,
+svg.hoverable:hover,
+svg.hoverable:active,
+svg.hoverable:default,
+svg.hoverable:focus ,
+a.hoverable,
+a.hoverable:hover,
+a.hoverable:active,
+a.hoverable:default,
+a.hoverable:focus {
+  background-color: transparent;
+  border-bottom: 1px solid black;
 }
 .App {
   text-align: center;

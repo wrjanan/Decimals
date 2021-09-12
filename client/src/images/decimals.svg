@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMin meet" viewBox="0 0 350 350"
+    style="background-color:11ee11">
+    <style>
+        .base {
+            font-size: 20px;
+        }
+    </style><text x="10" y="40" class="base">0.272017564623360939</text><text x="10" y="80"
+        class="base">0.566200683083320581</text><text x="10" y="120" class="base">0.051922920231826841</text><text
+        x="10" y="160" class="base">0.647072231397748618</text><text x="10" y="200"
+        class="base">0.560004563844581298</text><text x="10" y="240" class="base">0.169897251319506369</text><text
+        x="10" y="280" class="base">0.515947101267868733</text><text x="10" y="320"
+        class="base">0.968359643623266971</text>
+</svg>

@@ -76,7 +76,7 @@ const MintPopover: React.FC<MintPopoverProps> = ({
         <InputNumber style={{textAlign:"center"}} min={1} max={3} value={number.value} onChange={onNumberChange} />
       </Form.Item>
       <Form.Item style={{textAlign: "end"}}>
-        <Button type="primary" htmlType="submit" disabled={isLoading} loading={isLoading}>
+        <Button type="primary" htmlType="submit" disabled={isLoading} loading={isLoading} className="hoverable">
           Mint {number.value} Decimals Now
         </Button>
       </Form.Item>

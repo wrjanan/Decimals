@@ -14,11 +14,11 @@ function Main() {
         <Intro />
       </Layout>
       <Divider></Divider>
-      <Layout style={{ minHeight: "100vh", textAlign: 'center', justifyContent: "center", backgroundColor:"aquamarine", paddingTop:"1em", paddingBottom:"1em"}}>
+      <Layout style={{ minHeight: "90vh", textAlign: 'center', justifyContent: "center", paddingTop:"1em", paddingBottom:"1em"}}>
         <About />
       </Layout>
       <Divider></Divider>
-      <Layout style={{ minHeight: "100vh", textAlign: 'center', justifyContent: "center", backgroundColor:"darkturquoise", paddingTop:"1em", paddingBottom:"1em" }}>
+      <Layout style={{ minHeight: "90vh", textAlign: 'center', justifyContent: "center", paddingTop:"1em", paddingBottom:"1em" }}>
         <Technicals />
       </Layout>
       <Divider></Divider>
