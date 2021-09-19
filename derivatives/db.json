@@ -1,4 +1,10 @@
 {
+    "Developer Tools": [
+        {
+            "name": "Decimals attribute picker",
+            "weblink": "https://www.npmjs.com/package/thedecimals"
+        }
+    ],
     "Generative Art": [
         {
             "name": "Chladni generative particles art",
