@@ -28,14 +28,10 @@ export const Web3ContextProvider = ({ children }: PropsWithChildren<unknown>):Re
 
   const fetchWeb3Function = useCallback(async () => {
     try{
-      console.log("fetchContractFunction");
       const web3 = await getWeb3();
-      console.log("fetchContractFunction1");
       const web3Provider = web3.currentProvider;
       const accounts = await web3.eth.getAccounts();
-      console.log("fetchContractFunction2");
       const account = accounts[0];
-      console.log(accounts[0]);
       const payload = {
         status: ApiRequestStatus.isSuccessful,
         isWeb3:true,
@@ -59,15 +55,11 @@ export const Web3ContextProvider = ({ children }: PropsWithChildren<unknown>):Re
     if (fetchingNow.current) {
       return;
     }
-    console.log("fetchingNow", fetchingNow)
-
 
     fetchingNow.current = true;
-    console.log("fetchingNow", fetchingNow)
     try {
       dispatch({ type: SET_LOADING });
       const fetchedWeb3 = await fetchWeb3Function();
-      console.log("fetchedWeb3s", fetchedWeb3)
       fetchingNow.current = false;
       dispatch({ type: SET_WEB3_CONTEXT, payload: fetchedWeb3 });
     } catch (e) {

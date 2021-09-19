@@ -80,7 +80,6 @@ export const ContractContextProvider = ({ children }: PropsWithChildren<unknown>
   },[]);
 
   const fetchContract = useCallback(async () => {
-    console.log("const DecimalsContract", state.contracts.DecimalsContract)
     if(state.contracts.DecimalsContract) {
       return;
     }
@@ -88,16 +87,12 @@ export const ContractContextProvider = ({ children }: PropsWithChildren<unknown>
     if (fetchingNow.current) {
       return;
     }
-    console.log("fetchingNow", fetchingNow)
-
 
     fetchingNow.current = true;
-    console.log("fetchingNow", fetchingNow)
     try {
       dispatch({ type: SET_LOADING });
 
       const fetchedContracts = await fetchContractFunction();
-      console.log("fetchedContracts", fetchedContracts)
       fetchingNow.current = false;
       dispatch({ type: SET_CONTEXT, payload: fetchedContracts });
     } catch (e) {

@@ -44,18 +44,14 @@ export interface ContractActions {
 }
 
 export const reducer = (state: ContractState, action: ContractActions): ContractState => {
-  console.log("reducer", action, state);
-
   switch (action.type) {
     case SET_LOADING:
       return { ...state, status: ApiRequestStatus.isLoading };
     case SET_FAILED:
       return { ...state, status: ApiRequestStatus.isFailed };
     case SET_CONTRACTS:
-      console.log("SET_CONTRACTS", { ...state, contracts: action.payload, status: ApiRequestStatus.isSuccessful })
       return { ...state, ...action.payload, status: ApiRequestStatus.isSuccessful };
     case SET_CONTEXT:
-      console.log("SET_CONTEXT", { ...state, ...action.payload, status: ApiRequestStatus.isSuccessful })
       return { ...state, ...action.payload, status: ApiRequestStatus.isSuccessful };
     default:
       return state;
